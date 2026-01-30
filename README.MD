@@ -32,7 +32,7 @@ Configuration file is located at `BepInEx/config/com.ic23.autoloot.cfg`
 ## Technical Details
 
 - Plugin ID: `com.ic23.autoloot`
-- Version: `1.0.0`
+- Version: `1.0.1`
 - Target Framework: .NET Standard 2.1
 - Dependencies: BepInEx, Harmony
 
@@ -83,7 +83,7 @@ BepInEx плагин для Crime Simulator, который автоматиче
 ## Технические детали
 
 - ID плагина: `com.ic23.autoloot`
-- Версия: `1.0.0`
+- Версия: `1.0.1`
 - Целевой фреймворк: .NET Standard 2.1
 - Зависимости: BepInEx, Harmony
 
