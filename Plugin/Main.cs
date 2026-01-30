@@ -6,13 +6,13 @@ using HarmonyLib;
 using System.ComponentModel;
 using UnityEngine;
 
-[BepInPlugin("com.ic23.autoloot", "AutoLoot", "1.0.0")]
+[BepInPlugin("com.ic23.autoloot", "AutoLoot", "1.0.1")]
 public class AutoLootPlugin : BaseUnityPlugin
 {
 	internal static class Logg
 	{
 		internal const string Prefix = "[AutoLoot] ";
-		internal static readonly ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource("Magnifier");
+		internal static readonly ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource("AutoLoot");
 		internal static void Debug(object data) => Logger.Log(BepInEx.Logging.LogLevel.Debug, Prefix + (data?.ToString() ?? "null"));
 		internal static void Info(object data) => Logger.Log(BepInEx.Logging.LogLevel.Info, Prefix + (data?.ToString() ?? "null"));
 		internal static void Message(object data) => Logger.Log(BepInEx.Logging.LogLevel.Info, Prefix + (data?.ToString() ?? "null"));
@@ -260,9 +260,15 @@ public static class AutoLootCollector
 
 			foreach (var pickupable in itemsToCollect)
 			{
-				// Quota check - if enough has been collected, finish (except for skillbooks)
-				if (requiredValue > 0 && !pickupable.assignedItem.isSkillBook)
+				// Quota check - if enough has been collected or quota already met, finish (except for skillbooks)
+				if (!pickupable.assignedItem.isSkillBook)
 				{
+					// Skip regular loot if quota is already fulfilled (requiredValue <= 0)
+					if (requiredValue <= 0)
+					{
+						continue;
+					}
+
 					float totalValue = Pinboard.Instance.collectedLootValue;
 					if (totalValue >= requiredValue)
 					{
